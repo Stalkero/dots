@@ -1,0 +1,13 @@
+#
+# Batoshu's termite config
+#
+
+# Colors
+[colors]
+background = rgba(0, 0, 0, 0.6)
+
+[options]
+font = Hack 11
+cursor_shape = underline
+
+; vim:ft=dosini
