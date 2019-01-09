@@ -1,0 +1,315 @@
+#
+# Batoshu's polybar config
+#
+
+# Colors
+[colors]
+bg = #771f1f1f
+bg_focused = #993f3f3f
+bg_darker = #99000000
+
+fg = #ffcccccc
+fg_focused = #ffffffff
+fg_inactive = #ff444444
+
+border = #88333333
+
+# Top bar
+[bar/top]
+width = 100%
+height = 27
+fixed-center = true
+
+background = ${colors.bg}
+foreground = ${colors.fg}
+
+border-bottom-size = 1
+border-bottom-color = ${colors.border}
+
+font-0 = fixed:pixelsize=8:weight=bold;0
+font-1 = "Font Awesome 5 Free:style=Regular:pixelsize=8;1"
+font-2 = "Font Awesome 5 Free:style=Solid:pixelsize=8;1"
+font-3 = "Font Awesome 5 Brands:pixelsize=8;1"
+font-4 = "Unifont:size=10;0"
+
+padding-left = 0
+padding-right = 0
+module-margin-left = 5
+module-margin-right = 5
+
+modules-left = workspaces
+modules-center = title
+modules-right = volume backlight battery wifi_ssid wifi_ip clock
+
+# Bottom bar
+[bar/bottom]
+width = 100%
+height = 27
+fixed-center = true
+bottom = true
+
+background = ${colors.bg}
+foreground = ${colors.fg}
+
+border-top-size = 2
+border-top-color = ${colors.border}
+
+font-0 = fixed:pixelsize=8:weight=bold;0
+font-1 = "Font Awesome 5 Free:style=Regular:pixelsize=8;1"
+font-2 = "Font Awesome 5 Free:style=Solid:pixelsize=8;1"
+font-3 = "Font Awesome 5 Brands:pixelsize=8;1"
+font-4 = "Unifont:size=10;0"
+
+padding-left = 5
+padding-right = 5
+module-margin-left = 5
+module-margin-right = 5
+
+modules-left = ram_bar cpu
+modules-center = temp
+modules-right = storage
+
+tray-position = right
+
+#
+# Top bar modules
+#
+
+# Workspaces
+[module/workspaces]
+type = internal/i3
+scroll-up = i3wm-wsnext
+scroll-down = i3wm-wsprev
+index-sort = true
+enable-click = true
+
+ws-icon-default=
+
+ws-icon-0 = 1;
+ws-icon-1 = 2;
+ws-icon-2 = 3;
+ws-icon-3 = 4;
+ws-icon-4 = 5;
+ws-icon-5 = 6;
+
+format = <label-state> <label-mode>
+
+label-focused = %icon% %name%
+label-focused-foreground = ${colors.fg_focused}
+label-focused-background = ${colors.bg_darker}
+label-focused-padding = 3
+
+label-unfocused = %icon% %name%
+label-unfocused-foreground = ${colors.fg}
+label-unfocused-padding = 3
+
+label-visible = %icon% %name%
+label-visible-padding = 3
+
+label-urgent = %icon% %name%
+label-urgent-foreground = #000000
+label-urgent-background = #bd2c40
+label-urgent-padding = 3
+
+# Current window title
+[module/title]
+type = internal/xwindow
+
+format = <label>
+format-background = ${colors.bg}
+format-foreground = ${colors.fg_focused}
+format-padding = 4
+
+label = %title%
+label-maxlen = 70
+
+label-empty = Empty
+label-empty-foreground = ${colors.fg}
+
+# Volume
+[module/volume]
+type = internal/pulseaudio
+
+format-volume = <ramp-volume> <label-volume>
+
+label-volume = %percentage%%
+label-volume-foreground = #ff
+
+format-muted-foreground = ${colors.fg}
+label-muted =   %percentage%%
+label-muted-foreground = ${colors.fg}
+
+ramp-volume-0 = 
+ramp-volume-1 = 
+ramp-volume-2 = 
+ramp-volume-foreground = ${colors.fg}
+
+# Backlight
+[module/backlight]
+type = internal/backlight
+card = intel_backlight
+format =  <label>
+interactive = true
+
+# Battery
+[module/battery]
+type = internal/battery
+full-at = 98
+time-format = %H:%M
+battery = BAT0
+adapter = ADP0
+
+format-charging = <animation-charging> <label-charging>
+format-discharging = <animation-discharging> <label-discharging>
+format-full = <label-full>
+label-full =  %percentage%%
+
+label-charging = %percentage%% %time%
+
+label-discharging = %percentage%% %time%
+
+animation-charging-0 = 
+animation-charging-1 = 
+animation-charging-2 = 
+animation-charging-3 = 
+animation-charging-4 = 
+animation-charging-framerate = 1250
+
+animation-discharging-0 = 
+animation-discharging-1 = 
+animation-discharging-2 = 
+animation-discharging-3 = 
+animation-discharging-4 = 
+animation-discharging-framerate = 2000
+
+# WiFi SSID
+[module/wifi_ssid]
+type = internal/network
+interface = wlp2s0
+interval = 2.0
+ping-interval = 10
+
+format-connected = <ramp-signal> <label-connected>
+label-connected = %essid%
+label-disconnected =    not connected
+
+ramp-signal-0 = 
+ramp-signal-1 = 
+ramp-signal-2 = 
+ramp-signal-3 = 
+ramp-signal-4 = 
+
+animation-packetloss-0 = 
+animation-packetloss-0-foreground = ${colors.fg_focused}
+animation-packetloss-1 = 
+animation-packetloss-1-foreground = ${colors.fg}
+animation-packetloss-framerate = 500
+
+# WiFi IP
+[module/wifi_ip]
+type = internal/network
+interface = wlp2s0
+interval = 2.0
+
+label-connected = "  %local_ip%"
+label-disconndcted = 
+
+# Date & time
+[module/clock]
+type = internal/date
+interval = 1
+format-padding = 5
+format-background = ${colors.bg_darker}
+format-foreground = ${colors.fg_focused}
+date =  %Y-%m-%d     %H:%M:%S
+
+#
+# Bottom modules
+#
+
+# CPU
+[module/cpu]
+type = internal/cpu
+interval = 1.5
+
+format = <label> <ramp-coreload>
+
+label = 
+label-foreground = ${colors.fg}
+
+ramp-coreload-0 = ▁
+ramp-coreload-0-foreground = #aaff77
+ramp-coreload-0-font = 5
+ramp-coreload-1 = ▂
+ramp-coreload-1-foreground = #aaff77
+ramp-coreload-1-font = 5
+ramp-coreload-2 = ▃
+ramp-coreload-2-foreground = #aaff77
+ramp-coreload-2-font = 5
+ramp-coreload-3 = ▄
+ramp-coreload-3-foreground = #aaff77
+ramp-coreload-3-font = 5
+ramp-coreload-4 = ▅
+ramp-coreload-4-foreground = #fba922
+ramp-coreload-4-font = 5
+ramp-coreload-5 = ▆
+ramp-coreload-5-foreground = #fba922
+ramp-coreload-5-font = 5
+ramp-coreload-6 = ▇
+ramp-coreload-6-foreground = #ff5555
+ramp-coreload-6-font = 5
+ramp-coreload-7 = █
+ramp-coreload-7-foreground = #ff5555
+ramp-coreload-7-font = 5
+
+# Ram bar
+[module/ram_bar]
+type = internal/memory
+interval = 2
+format = <bar-used>
+
+bar-used-width = 16
+bar-used-gradient = true
+bar-used-foreground-0 = #aaff77
+bar-used-foreground-1 = #fba922
+bar-used-foreground-2 = #ff5555
+bar-used-indicator = █
+bar-used-indicator-font = 5
+bar-used-indicator-foreground = ${colors.fg_focused}
+bar-used-fill = █
+bar-used-fill-font = 5
+bar-used-empty = █
+bar-used-empty-font = 5
+bar-used-empty-foreground = ${colors.fg_inactive}
+
+# Storage
+[module/storage]
+type = internal/fs
+interval = 10
+
+fixed-values = true
+spacing = 5
+
+mount-0 = /
+mount-1 = /home
+
+format-mounted = <label-mounted>
+label-mounted = %mountpoint% [%used%/%total%] (%percentage_free%% free)
+
+format-unmounted = <label-unmounted>
+label-unmounted = %mountpoint% not mounted
+label-unmounted-foreground = ${colors.fg_inactive}
+
+# CPU Temp monitor
+[module/temp]
+type = internal/temperature
+interval = 1
+
+thermal-zone = 0
+warn-temperature = 80
+
+units = true
+format = <label>
+label = CPU %temperature-c%
+
+; vim:ft=dosini
