@@ -1,0 +1,189 @@
+#
+# Batoshu's i3 config file
+#
+
+#
+# Startup applications
+#
+
+# Composition manager
+exec --no-startup-id compton -b &
+
+# Wallpaper
+exec --no-startup-id ~/.fehbg &
+
+# Notification server
+exec --no-startup-id dunst &
+
+# Polybar
+exec --no-startup-id polybar top &
+exec --no-startup-id polybar bottom &
+
+# udiskie (Automount external media devices)
+exec --no-startup-id udiskie --no-notify --tray --use-udisks2 &
+
+# OneDrive
+exec --no-startup-id rclone mount onedrive: ~/Clouds/OneDrive &
+
+# Set keyboard layout to pl
+exec --no-startup-id setxkbmap pl &
+
+#
+# Styling
+#
+
+# Font
+font pango:DejaVu Sans Mono 10
+
+# Borders
+default_border none
+default_floating_border none
+
+# Gaps
+gaps inner 7
+gaps outer 10
+
+# Use gaps only if there is more in one window in workspace
+#smart_gaps on
+
+#
+# Workspaces
+#
+set $ws1	"1"
+set $ws2	"2"
+set $ws3	"3"
+set $ws4	"4"
+set $ws5	"5"
+set $ws6	"6"
+set $ws7	"7"
+set $ws8	"8"
+set $ws9	"9"
+set $ws10	"10"
+
+#
+# Windows assigment
+#
+for_window [class="Google-chrome"]	move to workspace $ws2
+for_window [class="discord"] 		move to workspace $ws3
+for_window [class="Steam"]		move to workspace $ws4
+for_window [class="telegram-desktop"]	move to workspace $ws5
+for_window [class="Spotify"]		move to workspace $ws6
+
+#
+# Windows which should be alsays floating
+#
+for_window [class="Google-chrome"]	floating enable
+for_window [class="Steam"]		floating enable
+for_window [class="discord"]		floating enable
+for_window [class="osu!"]		floating enable
+for_window [class="keepassxc"]		floating enable
+
+#
+# Shortcuts
+#
+
+# Mod keys
+set $m	Mod4
+set $m2	Mod4+Shift
+
+# Use Mouse+mod to drag floating windows
+floating_modifier 		$m
+
+# Terminal
+bindsym $m+Return 		exec i3-sensible-terminal
+
+# App menu
+bindsym $m+d 			exec --no-startup-id i3-dmenu-desktop
+
+# Quit focused window
+bindsym $m2+q			kill
+
+# Toggle fullscreen mode
+bindsym $m+f 			fullscreen toggle
+
+# Toggle sticky mode
+bindsys $m+s			sticky toggle
+
+# Change focus between tiling and floating windows
+bindsym $m+space		focus mode_toggle
+
+# Toggle between tiling and floating mode
+bindsym $m2+space		floating toggle
+
+# Split in horizontal
+bindsym $m+h			split h
+bindsym $m+v			split v
+
+# Switch workspace
+bindsym $m+1			workspace $ws1
+bindsym $m+2			workspace $ws2
+bindsym $m+3			workspace $ws3
+bindsym $m+4			workspace $ws4
+bindsym $m+5			workspace $ws5
+bindsym $m+6			workspace $ws6
+bindsym $m+7			workspace $ws7
+bindsym $m+8			workspace $ws8
+bindsym $m+9			workspace $ws9
+bindsym $m+0			workspace $ws10
+
+# Move window to another workspace
+bindsym $m2+1			move container to workspace $ws1
+bindsym $m2+2			move container to workspace $ws2
+bindsym $m2+3			move container to workspace $ws3
+bindsym $m2+4			move container to workspace $ws4
+bindsym $m2+5			move container to workspace $ws5
+bindsym $m2+6			move container to workspace $ws6
+bindsym $m2+7			move container to workspace $ws7
+bindsym $m2+8			move container to workspace $ws8
+bindsym $m2+9			move container to workspace $ws9
+bindsym $m2+0			move container to workspace $ws10
+
+# Reload configuration
+bindsym $m2+c 		reload
+
+# Restart i3
+bindsym $m2+r 		restart
+
+# Pulse audio controls
+bindsym XF86AudioRaiseVolume	exec --no-startup-id pactl -- set-sink-volume 0 +5%
+bindsym XF86AudioLowerVolume	exec --no-startup-id pactl -- set-sink-volume 0 -5%
+bindsym XF86AudioMute 		exec --no-startup-id pactl set-sink-mute 0 toggle
+
+# Brightness controls
+bindsym XF86MonBrightnessUp	exec --no-startup-id xbacklight -inc 10
+bindsym XF86MonBrightnessDown	exec --no-startup-id xbacklight -dec 10
+
+# Screenshots shortcuts
+#bindsym Print			exec --no-startup-id screenshot full
+#bindsym $mod+Print --release	exec --no-startup-id screenshot select
+bindsym --release Print 	exec scrot -z '/home/batoshu/Pictures/screenshots/%Y-%m-%d_%H:%M:%S.png' -e 'xclip -selection c -t image/png < $f'
+bindsym --release $m+Print 	exec scrot -z -s '/home/batoshu/Pictures/screenshots/%Y-%m-%d_%H:%M:%S.png' -e 'xclip -selection c -t image/png < $f'
+
+# Change focus
+bindsym $m+Left			focus left
+bindsym $m+Down			focus down
+bindsym $m+Up			focus up
+bindsym $m+Right		focus right
+
+# Move focused window
+bindsym $m2+Left		move left
+bindsym $m2+Down		move down
+bindsym $m2+Up			move up
+bindsym $m2+Right		move right
+
+# Resize mode
+mode "resize" {
+	bindsym Left		resize shrink width 10 px or 10 ppt
+	bindsym Down		resize grow height 10 px or 10 ppt
+	bindsym Up		resize shrink height 10 px or 10 ppt
+	bindsym Right		resize grow width 10 px or 10 ppt
+
+	bindsym Return		mode "default"
+	bindsym Escape		mode "default"
+	bindsym $mod+r		mode "default"
+}
+bindsym $m+r			mode "resize"
+
+
+# Kill programs from autostart and exit i3
+bindsym $m2+e			exec "pkill compton; pkill dunst; pkill polybar; pkill rclone; pkill udiskie; i3-msg exit"
