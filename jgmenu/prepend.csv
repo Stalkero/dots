@@ -1,0 +1,6 @@
+# Search box
+Lock,b-sm lock,system-lock-screen
+Logout,b-sm logout,system-log-out
+Reboot,b-sm reboot,system-reboot
+Shutdown,b-sm shutdown,system-shutdown
+^sep()

@@ -1,0 +1,36 @@
+# jgmenu config
+terminal_exec       = termite
+columns             = 1
+
+menu_width          = 300
+menu_height_min     = 500
+menu_height_max     = 500
+menu_padding_top    = 15
+menu_padding_right  = 20
+menu_padding_bottom = 15
+menu_padding_left   = 20
+menu_radius         = 6
+menu_border         = 2
+menu_halign         = center
+menu_valign         = center
+
+item_height         = 30
+item_padding_x      = 10
+item_radius         = 3
+
+font                = Hack 10
+icon_size           = 0
+
+color_menu_bg       = #1f1f1f 80
+color_menu_border   = #333333 40
+
+color_norm_bg       = #000000 00
+color_norm_fg       = #cccccc 100
+
+color_sel_bg        = #3f3f3f 80
+color_sel_fg        = #ffffff 100
+color_sel_border    = #000000 0
+
+color_sep_fg        = #333333 100
+
+csv_no_dirs         = 1
