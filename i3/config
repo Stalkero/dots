@@ -66,11 +66,8 @@ set $m2	Mod4+Shift
 # Use Mouse+mod to drag floating windows
 floating_modifier 		$m
 
-# Terminal
-bindsym $m+Return 		exec i3-sensible-terminal
-
-# App menu
-bindsym $m+d 			exec --no-startup-id i3-dmenu-desktop
+# jgmenu
+bindsym $m+Return 		exec jgmenu_run >/dev/null 2>&1
 
 # Quit focused window
 bindsym $m2+q			kill
