@@ -1,0 +1,84 @@
+#!/bin/sh
+# Batoshu session manager (b-sm tool)
+
+if [[ $# -lt 1 ]]; then
+	echo "Please select action:
+	b-sm autostart
+	b-sm lock
+	b-sm logout
+	b-sm reboot
+	b-sm shutdown"
+	exit 1
+fi
+
+autostart() {
+	# Composition manager
+	compton -b &
+	# Wallpaper
+	~/.fehbg &
+	# Notification server
+	dunst &
+	# Polybar
+	polybar top &
+	polybar bottom &
+	# udiskie
+	udiskie --tray --use-udisks2 &
+	# Mount OneDrive
+	rclone mount onedrive: $HOME/Clouds/OneDrive &
+	# Set ketboard layout to pl
+	setxkbmap pl &
+}
+
+autostart_kill() {
+	# Kill all apps from autostart
+	pkill compton
+	pkill dunst
+	pkill polybar
+	pkill udiskie
+	pkill rclone
+}
+
+lock() {
+	# Do some magic and run i3lock
+	FILE="/tmp/i3lock.png"
+	BLUR="8x6"
+	scrot $FILE
+	convert -blur $BLUR $FILE $FILE
+	i3lock -i $FILE -e -f -p default	
+}
+
+i3exit() {
+	autostart_kill
+	i3-msg exit
+}
+
+reboot() {
+	systemctl reboot
+}
+
+shutdown() {
+	shutdown -h now
+}
+
+case "$1" in
+	autostart)
+		autostart
+		;;
+	lock)
+		lock
+		;;
+	logout)
+		i3exit
+		;;
+	reboot)
+		reboot
+		;;
+	shutdown)
+		shutdown
+		;;
+	*)
+		echo "Invalid argument."
+		exit 2
+		;;
+esac
+
