@@ -1,6 +1,4 @@
-#
-# Batoshu's polybar config
-#
+; vim:ft=dosini
 
 # Colors
 [colors]
@@ -65,7 +63,7 @@ padding-right = 5
 module-margin-left = 5
 module-margin-right = 5
 
-modules-left = ram_bar cpu
+modules-left = jgmenu ram_bar cpu
 modules-center = temp
 modules-right = storage
 
@@ -182,7 +180,7 @@ animation-discharging-3 = 
 animation-discharging-4 = 
 animation-discharging-framerate = 2000
 
-# WiFi SSID
+# WiFi
 [module/wifi_ssid]
 type = internal/network
 interface = wlp2s0
@@ -205,7 +203,6 @@ animation-packetloss-1 = 
 animation-packetloss-1-foreground = ${colors.fg}
 animation-packetloss-framerate = 500
 
-# WiFi IP
 [module/wifi_ip]
 type = internal/network
 interface = wlp2s0
@@ -226,6 +223,12 @@ date =  %Y-%m-%d     %H:%M:%S
 #
 # Bottom modules
 #
+
+# jgmenu
+[module/jgmenu]
+type = custom/text
+content = 
+click-left = "jgmenu_run >/dev/null 2>&1 &"
 
 # CPU
 [module/cpu]
@@ -311,5 +314,3 @@ warn-temperature = 80
 units = true
 format = <label>
 label = CPU %temperature-c%
-
-; vim:ft=dosini
