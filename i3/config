@@ -1,32 +1,9 @@
-#
 # Batoshu's i3 config file
-#
 
 #
 # Startup applications
 #
-
-# Composition manager
-exec --no-startup-id compton -b &
-
-# Wallpaper
-exec --no-startup-id ~/.fehbg &
-
-# Notification server
-exec --no-startup-id dunst &
-
-# Polybar
-exec --no-startup-id polybar top &
-exec --no-startup-id polybar bottom &
-
-# udiskie (Automount external media devices)
-exec --no-startup-id udiskie --no-notify --tray --use-udisks2 &
-
-# OneDrive
-exec --no-startup-id rclone mount onedrive: ~/Clouds/OneDrive &
-
-# Set keyboard layout to pl
-exec --no-startup-id setxkbmap pl &
+exec --no-startup-id b-sm autostart
 
 #
 # Styling
@@ -185,5 +162,5 @@ mode "resize" {
 bindsym $m+r			mode "resize"
 
 
-# Kill programs from autostart and exit i3
-bindsym $m2+e			exec "pkill compton; pkill dunst; pkill polybar; pkill rclone; pkill udiskie; i3-msg exit"
+# Logout
+bindsym $m2+e			exec b-sm logout
