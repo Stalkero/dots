@@ -57,7 +57,7 @@ reboot() {
 }
 
 shutdown() {
-	shutdown -h now
+	systemctl poweroff
 }
 
 case "$1" in
