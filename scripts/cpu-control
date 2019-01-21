@@ -1,0 +1,114 @@
+#!/bin/sh
+# Simple CPU manager
+# Helps with governor and min/max frequency controlling
+
+if [[ $EUID -ne 0 ]]; then
+	echo "This script must be run as root."
+	exit 1
+fi
+
+GOVERNORS=(performance powersave userspace ondemand conservative schedutil)
+MIN_FREQ=$(cat /sys/devices/system/cpu/cpu0/cpufreq/cpuinfo_min_freq)
+MAX_FREQ=$(cat /sys/devices/system/cpu/cpu0/cpufreq/cpuinfo_max_freq)
+
+governor() {
+	echo $1 | tee /sys/devices/system/cpu/cpu*/cpufreq/scaling_governor
+}
+
+freq_min() {
+	if [[ $1 -gt $MAX_FREQ ]]; then
+		1=$MAX_FREQ
+	fi
+
+	if [[ $1 -lt $MIN_FREQ ]]; then
+		1=$MIN_FREQ
+	fi
+
+	echo $1 | tee /sys/devices/system/cpu/cpu*/cpufreq/scaling_min_freq
+}
+
+freq_max() {
+	if [[ $1 -gt $MAX_FREQ ]]; then
+		1=$MAX_FREQ
+	fi
+
+	if [[ $1 -lt $MIN_FREQ ]]; then
+		1=$MIN_FREQ
+	fi
+
+	echo $1 | tee /sys/devices/system/cpu/cpu*/cpufreq/scaling_max_freq
+}
+
+toggle_turbo() {
+	TURBO=1
+	if [[ $1 == "on" ]]; then
+		TURBO=0
+	fi
+	echo $TURBO | tee /sys/devices/system/cpu/intel_pstate/no_turbo
+}
+
+switch_mode() {
+	case "$1" in
+	powersave)
+		governor powersave
+		freq_min 400000
+		freq_max 1800000
+		toggle_turbo off
+		;;
+	standard)
+		governor performance
+		freq_min 400000
+		freq_max 4000000
+		toggle_turbo on
+		;;
+	performance)
+		governor performance
+		freq_min 2000000
+		freq_max 4000000
+		toggle_turbo on
+		;;
+	media)
+		governor powersave
+		freq_min 400000
+		freq_max 1200000
+		toggle_turbo on
+		;;
+	ultrasave)
+		governor powersave
+		freq_min 400000
+		freq_max 800000
+		toggle_turbo off
+		;;
+	*)
+		echo "Invalid mode."
+		exit 1
+		;;
+	esac
+}
+
+case "$1" in
+	set-governor)
+		governor $2
+		;;
+	set-min-freq)
+		freq_min $2
+		;;
+	set-max-freq)
+		freq_max $2
+		;;
+	turbo-toggle)
+		toggle_turbo $2
+		;;
+	mode)
+		switch_mode $2
+		;;
+	*)
+		echo "Possible actions:"
+		echo "	set-governor performance|powersave"
+		echo "	set-min-freq frequency"
+		echo "	set-max-freq frequency"
+		echo "	turbo-toggle on|off"
+		echo "	mode ultrasave|powersave|media|standard|performance"
+		;;
+esac
+
