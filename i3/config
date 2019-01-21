@@ -66,7 +66,7 @@ set $m2	Mod4+Shift
 floating_modifier 		$m
 
 # jgmenu
-bindsym $m+Return 		exec jgmenu_run >/dev/null 2>&1
+bindsym $m+Return 		exec --no-startup-id "jgmenu_run >/dev/null 2>&1"
 
 # Quit focused window
 bindsym $m2+q			kill
