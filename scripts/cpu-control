@@ -86,6 +86,17 @@ switch_mode() {
 	esac
 }
 
+print_info() {
+	echo "Governor:"
+	cat /sys/devices/system/cpu/cpu*/cpufreq/scaling_governor
+	echo "Minimum frequency:"
+	cat /sys/devices/system/cpu/cpu*/cpufreq/scaling_min_freq
+	echo "Maximum frequency:"
+	cat /sys/devices/system/cpu/cpu*/cpufreq/scaling_max_freq
+	echo ""
+	echo "Turbo:	$(cat /sys/devices/system/cpu/intel_pstate/no_turbo)"
+}
+
 case "$1" in
 	set-governor)
 		governor $2
@@ -102,6 +113,9 @@ case "$1" in
 	mode)
 		switch_mode $2
 		;;
+	info)
+		print_info
+		;;
 	*)
 		echo "Possible actions:"
 		echo "	set-governor performance|powersave"
@@ -109,6 +123,7 @@ case "$1" in
 		echo "	set-max-freq frequency"
 		echo "	turbo-toggle on|off"
 		echo "	mode ultrasave|powersave|media|standard|performance"
+		echo "	info"
 		;;
 esac
 
