@@ -9,5 +9,6 @@ background = rgba(0, 0, 0, 0.6)
 [options]
 font = Hack 11
 cursor_shape = underline
+scrollback_lines = -1
 
 ; vim:ft=dosini
