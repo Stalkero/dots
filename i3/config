@@ -110,10 +110,10 @@ bindsym $m2+9			move container to workspace $ws9
 bindsym $m2+0			move container to workspace $ws10
 
 # Reload configuration
-bindsym $m2+c 		reload
+bindsym $m2+c 			reload
 
 # Restart i3
-bindsym $m2+r 		restart
+bindsym $m2+r 			restart
 
 # Pulse audio controls
 bindsym XF86AudioRaiseVolume	exec --no-startup-id pactl -- set-sink-volume 0 +5%
