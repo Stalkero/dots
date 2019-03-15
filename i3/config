@@ -125,10 +125,8 @@ bindsym XF86MonBrightnessUp	exec --no-startup-id xbacklight -inc 10
 bindsym XF86MonBrightnessDown	exec --no-startup-id xbacklight -dec 10
 
 # Screenshots shortcuts
-#bindsym Print			exec --no-startup-id screenshot full
-#bindsym $mod+Print --release	exec --no-startup-id screenshot select
-bindsym --release Print 	exec scrot -z '/home/batoshu/Pictures/screenshots/%Y-%m-%d_%H:%M:%S.png' -e 'xclip -selection c -t image/png < $f'
-bindsym --release $m+Print 	exec scrot -z -s '/home/batoshu/Pictures/screenshots/%Y-%m-%d_%H:%M:%S.png' -e 'xclip -selection c -t image/png < $f'
+bindsym --release Print 	exec --no-startup-id scrot -z '/home/batoshu/Pictures/screenshots/%Y-%m-%d_%H:%M:%S.png' -e 'xclip -selection c -t image/png < $f'
+bindsym --release $m+Print 	exec --no-startup-id scrot -z -s '/home/batoshu/Pictures/screenshots/%Y-%m-%d_%H:%M:%S.png' -e 'xclip -selection c -t image/png < $f'
 
 # Change focus
 bindsym $m+Left			focus left
