@@ -1,0 +1,42 @@
+#!/bin/sh
+# Wallpaper changer
+# Author: Bartosz "Batoshu" Staniek
+
+# Passed file/directory
+export F=$1
+
+# Selected wallpaper (passed file or randomized file from passed directory)
+export WALL=""
+
+# If true, then wallpaper is copied to ~/.wallpaper file and then set
+# Usefull when wallpaper is selected from online file
+export COPY=false
+
+
+if test -z $F; then
+	echo "No directory/file specified"
+	echo "Script usage:"
+	echo "$0 <directory/file>"
+	exit 1
+fi
+
+if [ "$2" == "-c" ] || [ "$2" == "--copy" ]; then
+	COPY=true
+fi
+
+if test -f $F; then
+	WALL=$F
+elif test -d $F; then
+	WALL=$(find $F -type f | shuf -n 1)
+else
+	echo "Invalid directory/file passed"
+	exit 2
+fi
+
+if [ $COPY == true ]; then
+	cp $WALL $HOME/.wallpaper
+	WALL=$HOME/.wallpaper
+fi
+
+# TODO: feh is cool, but I guess it shouldn't be "hardcoded" like this
+feh --bg-fill $WALL
