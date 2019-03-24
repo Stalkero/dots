@@ -69,7 +69,6 @@ module-margin-right = 5
 
 modules-left = jgmenu ram_bar cpu
 modules-center = temp
-modules-right = storage
 
 tray-position = right
 
@@ -288,24 +287,6 @@ bar-used-fill-font = 5
 bar-used-empty = █
 bar-used-empty-font = 5
 bar-used-empty-foreground = ${colors.fg_inactive}
-
-# Storage
-[module/storage]
-type = internal/fs
-interval = 10
-
-fixed-values = true
-spacing = 5
-
-mount-0 = /
-mount-1 = /home
-
-format-mounted = <label-mounted>
-label-mounted = %mountpoint% [%used%/%total%] (%percentage_free%% free)
-
-format-unmounted = <label-unmounted>
-label-unmounted = %mountpoint% not mounted
-label-unmounted-foreground = ${colors.fg_inactive}
 
 # CPU Temp monitor
 [module/temp]
