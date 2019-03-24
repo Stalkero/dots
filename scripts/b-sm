@@ -27,6 +27,8 @@ autostart() {
 	rclone mount onedrive: $HOME/Clouds/OneDrive &
 	# Set ketboard layout to pl
 	setxkbmap pl &
+	# Conky
+	conky
 }
 
 autostart_kill() {
@@ -36,6 +38,7 @@ autostart_kill() {
 	pkill polybar
 	pkill udiskie
 	pkill rclone
+	pkill conky
 }
 
 lock() {
