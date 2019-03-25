@@ -14,21 +14,23 @@ fi
 autostart() {
 	# Composition manager
 	compton -b &
-	# Wallpaper
-	~/.fehbg &
 	# Notification server
 	dunst &
 	# Polybar
 	polybar top &
 	polybar bottom &
-	# udiskie
-	udiskie --tray --use-udisks2 &
-	# Mount OneDrive
-	rclone mount onedrive: $HOME/Clouds/OneDrive &
-	# Set ketboard layout to pl
-	setxkbmap pl &
 	# Conky
-	conky
+	conky &
+
+	# Wallpaper
+	$HOME/.fehbg &
+	# udiskie
+	udiskie --tray --use-udisks2  &
+	# OneDrive
+	rclone mount onedrive: $HOME/Clouds/OneDrive &
+
+	# Set Polish keyboard layout
+	setxkbmap pl
 }
 
 autostart_kill() {
